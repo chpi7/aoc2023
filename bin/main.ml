@@ -1,1 +1,1 @@
-let () = Aoc2023.Day1.main ()
+let () = Aoc2023.Day2.main ()
