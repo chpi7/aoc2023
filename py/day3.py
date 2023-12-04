@@ -4,6 +4,7 @@ from collections import defaultdict
     (row_idx, char_idx) -> list[int]"""
 gears = defaultdict(list)
 
+
 def find_numbers(line: str):
     start_idx = 0
     current = ""
@@ -21,7 +22,7 @@ def find_numbers(line: str):
         else:
             # jump over whatever is here
             pass
-        
+
         last_digit = char.isdigit()
 
     if current != "":
@@ -31,8 +32,8 @@ def find_numbers(line: str):
 def is_adjacent(number: str, idx: int, lines: list[str], lineidx: int):
     global gears
 
-    for row_idx in [lineidx-1, lineidx+1]:
-        for char_idx in range(idx-1, idx + len(number) + 1):
+    for row_idx in [lineidx - 1, lineidx + 1]:
+        for char_idx in range(idx - 1, idx + len(number) + 1):
             char = lines[row_idx][char_idx]
             if not (char.isdigit() or char == "."):
                 if char == "*":
@@ -40,11 +41,11 @@ def is_adjacent(number: str, idx: int, lines: list[str], lineidx: int):
                     gears[(row_idx, char_idx)].append(int(number))
                 return True
 
-    pred_char = lines[lineidx][idx-1]
+    pred_char = lines[lineidx][idx - 1]
     succ_char = lines[lineidx][idx + len(number)]
     if not (pred_char == "." or pred_char.isdigit()):
         row_idx = lineidx
-        char_idx = idx-1
+        char_idx = idx - 1
         if pred_char == "*":
             # found gear
             gears[(row_idx, char_idx)].append(int(number))
@@ -59,6 +60,7 @@ def is_adjacent(number: str, idx: int, lines: list[str], lineidx: int):
 
     return False
 
+
 def compute_gear_ratio_sum():
     sum = 0
     for nums in gears.values():
@@ -66,11 +68,13 @@ def compute_gear_ratio_sum():
             sum += nums[0] * nums[1]
     return sum
 
+
 def pad_lines(lines: list[str]) -> list[str]:
     linelen = len(lines[0]) + 2
-    padded_orig = [ "." + line + "." for line in lines ]
+    padded_orig = ["." + line + "." for line in lines]
     first_last = "." * linelen
     return [first_last] + padded_orig + [first_last]
+
 
 def strip_lines(lines: list[str]) -> list[str]:
     return [line.strip() for line in lines]
@@ -87,6 +91,7 @@ def solve(lines: list[str]):
     print(f"{sum=}")
     gear_ratio_sum = compute_gear_ratio_sum()
     print(f"{gear_ratio_sum=}")
+
 
 def main():
     with open("inputs/day3.txt") as f:
